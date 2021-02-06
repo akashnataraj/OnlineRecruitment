@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OREC.APP", "OREC.APP\OREC.APP.csproj", "{E0AC6805-A7A3-46D2-9882-1E6204BF41E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OREC.BL", "OREC.BL\OREC.BL.csproj", "{86EF013D-EE95-419D-A8E2-04BF695FDA4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OREC.DAL", "OREC.DAL\OREC.DAL.csproj", "{8A266340-464E-46D5-ADEF-1B801C3FADFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0AC6805-A7A3-46D2-9882-1E6204BF41E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0AC6805-A7A3-46D2-9882-1E6204BF41E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0AC6805-A7A3-46D2-9882-1E6204BF41E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0AC6805-A7A3-46D2-9882-1E6204BF41E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86EF013D-EE95-419D-A8E2-04BF695FDA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86EF013D-EE95-419D-A8E2-04BF695FDA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86EF013D-EE95-419D-A8E2-04BF695FDA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86EF013D-EE95-419D-A8E2-04BF695FDA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A266340-464E-46D5-ADEF-1B801C3FADFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A266340-464E-46D5-ADEF-1B801C3FADFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A266340-464E-46D5-ADEF-1B801C3FADFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A266340-464E-46D5-ADEF-1B801C3FADFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29C6A1D3-38F7-435F-9D1B-9D4D99C8E854}
+	EndGlobalSection
+EndGlobal

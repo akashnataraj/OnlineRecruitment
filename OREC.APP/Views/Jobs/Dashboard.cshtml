@@ -1,0 +1,102 @@
+﻿@model OREC.BL.DTO.JobsDashboardDTO
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject OREC.APP.Common.Util _util
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <style>
+        body {
+            overflow-x: hidden !important;
+        }
+
+        form {
+            display: contents !important;
+        }
+
+        .container-custom {
+            margin-left: 10%;
+            margin-right: 0%;
+        }
+
+        .center-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 35%;
+        }
+
+        .card {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    @{
+        int _roleid = 0;
+        string _readOnly = string.Empty;
+        var userDet = _util.GetUserrInfo();
+        if (userDet == null || userDet.Count == 0)
+        {
+            //return View("Account","Login");
+        }
+        else
+        {
+            _roleid = Convert.ToInt32(userDet["roleid"]);
+        }
+    }
+    <div class="container-custom">
+        <div class="row m-4">
+            @if (_roleid == Configuration.GetValue<int>("Role:Recruiter"))
+            {
+                <h5 style="color:grey;">Posted Jobs</h5>
+            }
+            else
+            {
+                <h5 style="color:grey;">Based on your profile</h5>
+            }
+        </div>
+        <div class="row">
+            @if (_roleid == Configuration.GetValue<int>("Role:Recruiter"))
+            {
+                <div class="card mr-4 mb-4 center" style="width: 18rem; background-color:#efecec;" onclick="jobDetail(0);">
+                    <img class="mt-5 center-image" src="~/images/add.svg" />
+                    <h4 class="mt-2 text-center">Create Job</h4>
+                </div>
+            }
+            @for (int i = 0; i < Model.Jobs.Count; i++)
+            {
+                <div class="card mr-4 mb-4" style="width: 18rem;" onclick="jobDetail(@Model.Jobs[i].JobId);">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Jobs[i].Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@Model.Jobs[i].City, @Model.Jobs[i].State</h6>
+                        <p class="card-text">@Model.Jobs[i].RequiredExperience+ experience required</p>
+                        <p class="card-text">@Model.Jobs[i].JobType</p>
+                        @if (_roleid == Configuration.GetValue<int>("Role:User"))
+                        {
+                            <p class="card-text">@Model.Jobs[i].MatchingSkillCount/@Model.Jobs[i].TotalJobSkills skills match</p>
+                        }
+                        <p class="card-footer">@Model.Jobs[i].PostedBefore | @Model.Jobs[i].AppliedUserCount @(@Model.Jobs[i].AppliedUserCount == 1 ? "applicant" : "applicants")</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function jobDetail(jobid) {
+        if (jobid > 0)
+            window.location.href = "/Jobs/JobDetail/?jobId=" + jobid;
+        else
+            window.location.href = "/Jobs/JobDetail";
+    }
+</script>

@@ -1,0 +1,79 @@
+﻿@inject OREC.APP.Common.Util _util
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/lib/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/sweet-alert/sweetalert.min.css" rel="stylesheet" />
+    <link href="~/css/Main.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-unobtrusive-ajax/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweet-alert/sweetalert.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body>
+    @{
+        int _userid = 0, _roleid = 0;
+        string _username = string.Empty;
+        var userDet = _util.GetUserrInfo();
+        if (userDet == null || userDet.Count == 0)
+        {
+            //Response.Redirect(Url.Action("Home","Logout"));
+        }
+        else
+        {
+            _userid = Convert.ToInt32(userDet["userid"]);
+            _roleid = Convert.ToInt32(userDet["roleid"]);
+            _username = userDet["username"];
+        }
+    }
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark">
+            <div class="navbar-collapse dual-collapse2">
+                <h4 class="ml-2 navbar-brand navbar-nav mr-auto">Online Recruitment System</h4>
+            </div>
+            <div class="navbar-collapse dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    @if (_roleid == Configuration.GetValue<int>("Role:User"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Users" asp-action="Profile">Profile<span><img class="" style="height: 25px;width:25px;" src="~/Icons/avatar.png"></span></a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Jobs" asp-action="Dashboard">Jobs<span><img class="ml-2" style="height: 30px;width:30px;" src="~/Icons/job-search.png"></span></a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="nav-link" href="">@_username</a>
+                        <div class="dropdown-content">
+                            <a asp-controller="Account" asp-action="Logout">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; OREC
+        </div>
+    </footer>
+    @RenderSection("Scripts", required: false)
+    <script>
+    </script>
+</body>
+</html>

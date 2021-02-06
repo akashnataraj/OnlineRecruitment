@@ -1,0 +1,146 @@
+﻿@model OREC.BL.DTO.UsersDTO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Profile</title>
+    <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2/dist/js/select2.min.js"></script>
+    <style>
+        .center {
+            margin: auto;
+            width: 100%;
+            padding: 30px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="col-md-8 center">
+            <div class="py-5 text-center">
+                <h2>PROFILE</h2>
+            </div>
+            <form method="post">
+                <div class="row">
+                    @Html.HiddenFor(x => x.UserId)
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FirstName"></label><span style="color:red;">*</span>
+                        <input asp-for="FirstName" class="form-control">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="LastName"></label><span style="color:red;">*</span>
+                        <input asp-for="LastName" class="form-control">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MobileNumber"></label><span style="color:red;">*</span>
+                    <input asp-for="MobileNumber" class="form-control">
+                    <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="HighestQualification"></label><span style="color:red;">*</span>
+                    <input asp-for="HighestQualification" class="form-control">
+                    <span asp-validation-for="HighestQualification" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentOrganization"></label><span style="color:red;">*</span>
+                    <input asp-for="CurrentOrganization" class="form-control">
+                    <span asp-validation-for="CurrentOrganization" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CurrentPosition"></label><span style="color:red;">*</span>
+                    <input asp-for="CurrentPosition" class="form-control">
+                    <span asp-validation-for="CurrentPosition" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Experience"></label><span style="color:red;">*</span>
+                    <input asp-for="Experience" class="form-control">
+                    <span asp-validation-for="Experience" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="InternalEmployeeId"></label><span style="color:red;"> (Only for Internal Employees)</span>
+                    <input asp-for="InternalEmployeeId" class="form-control">
+                    <span asp-validation-for="InternalEmployeeId" class="text-danger"></span>
+                </div>
+                <div class="container">
+                    <div class="mb-3">
+                        <h4 class="mr-2">Skills</h4>
+                        <select class="form-control" style="height: 40px !important;" id="skillsDropdown" multiple="multiple">
+                            @if (Model.Skills != null)
+                            {
+                                for (int i = 0; i < Model.Skills.Count; i++)
+                                {
+                                    if (Model.Skills[i].IsMapped)
+                                    {
+                                        <option value="@Model.Skills[i].SkillID" selected>@Model.Skills[i].SkillName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@Model.Skills[i].SkillID">@Model.Skills[i].SkillName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        @if (Model.Skills != null)
+                        {
+                            for (int i = 0; i < Model.Skills.Count; i++)
+                            {
+                                @Html.HiddenFor(x => x.Skills[i].SkillID)
+                                @Html.HiddenFor(x => x.Skills[i].SkillName)
+                                @Html.HiddenFor(x => x.Skills[i].IsMapped, new { id = "hdnSkill-" + @Model.Skills[i].SkillID })
+                            }
+                        }
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Save Profile" />
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="popupModal" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Save successfull</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary text-white" asp-controller="Users" asp-action="Profile">Ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</html>
+<script>
+    if(@Model.Code==200) {
+        $("#popupModal").modal('show');
+    }
+    $(document).ready(function () {
+        $("#skillsDropdown").select2({
+            closeOnSelect: false,
+            allowHtml: true,
+            allowClear: true,
+            tags: true
+        });
+    });
+
+    $('#skillsDropdown').on('select2:select', function (e) {
+        var skillId = e.params.data.id;
+        $('#hdnSkill-' + skillId).val(true);
+    });
+
+    $('#skillsDropdown').on('select2:unselect', function (e) {
+        var skillId = e.params.data.id;
+        $('#hdnSkill-' + skillId).val(false);
+    });
+
+</script>
+
